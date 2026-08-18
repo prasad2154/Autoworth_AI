@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg: 10 10 15;
+    --color-surface: 16 16 24;
+    --color-surface-2: 22 22 34;
+    --color-border: 40 40 60;
+    --color-text: 240 240 250;
+    --color-text-muted: 140 140 170;
+    --color-primary: 99 102 241;
+    --color-primary-light: 129 140 248;
+    --color-accent: 251 191 36;
+    --color-success: 52 211 153;
+    --color-danger: 248 113 113;
+    --color-warning: 251 146 60;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', 'Manrope', system-ui, sans-serif;
+    background-color: rgb(10 10 15);
+    color: rgb(240 240 250);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  input, select, textarea {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  /* ── Glass Cards ── */
+  .card {
+    background: rgb(16 16 24 / 0.8);
+    border: 1px solid rgb(40 40 60 / 0.6);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+  }
+
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 0.4);
+    border-color: rgb(99 102 241 / 0.4);
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgb(99 102 241), rgb(139 92 246));
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, rgb(79 70 229), rgb(124 58 237));
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgb(99 102 241 / 0.4);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 24px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: 12px;
+    background: transparent;
+    color: rgb(240 240 250);
+    border: 1px solid rgb(40 40 60);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-secondary:hover {
+    background: rgb(40 40 60 / 0.5);
+    border-color: rgb(99 102 241 / 0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    background: transparent;
+    color: rgb(140 140 170);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-ghost:hover {
+    background: rgb(40 40 60 / 0.4);
+    color: rgb(240 240 250);
+  }
+
+  /* ── Inputs ── */
+  .input-field {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgb(22 22 34);
+    border: 1px solid rgb(40 40 60);
+    border-radius: 10px;
+    color: rgb(240 240 250);
+    font-size: 0.9375rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+  }
+  .input-field:focus {
+    border-color: rgb(99 102 241 / 0.7);
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.15);
+  }
+  .input-field::placeholder { color: rgb(100 100 130); }
+  .input-field:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .input-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgb(140 140 170);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .badge-success { background: rgb(52 211 153 / 0.15); color: rgb(52 211 153); }
+  .badge-warning { background: rgb(251 146 60 / 0.15); color: rgb(251 146 60); }
+  .badge-danger  { background: rgb(248 113 113 / 0.15); color: rgb(248 113 113); }
+  .badge-info    { background: rgb(99 102 241 / 0.15); color: rgb(129 140 248); }
+  .badge-accent  { background: rgb(251 191 36 / 0.15); color: rgb(251 191 36); }
+
+  /* ── Gradient text ── */
+  .gradient-text {
+    background: linear-gradient(135deg, rgb(129 140 248), rgb(196 181 253));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: rgb(16 16 24); }
+  ::-webkit-scrollbar-thumb { background: rgb(40 40 60); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(60 60 90); }
+
+  /* ── Skeleton loader ── */
+  .skeleton {
+    background: linear-gradient(90deg, rgb(22 22 34) 25%, rgb(32 32 48) 50%, rgb(22 22 34) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgb(40 40 60);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgb(99 102 241), rgb(139 92 246));
+    transition: width 0.6s ease;
+  }
+
+  /* ── Nav ── */
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgb(140 140 170);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: rgb(240 240 250);
+    background: rgb(40 40 60 / 0.5);
+  }
+
+  /* ── Step indicator ── */
+  .step-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+  .step-dot.active {
+    background: rgb(99 102 241);
+    color: white;
+    box-shadow: 0 0 0 4px rgb(99 102 241 / 0.2);
+  }
+  .step-dot.done {
+    background: rgb(52 211 153);
+    color: white;
+  }
+  .step-dot.inactive {
+    background: rgb(40 40 60);
+    color: rgb(100 100 130);
+  }
+}
