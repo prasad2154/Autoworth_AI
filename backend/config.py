@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     # App
     APP_ENV: str = "development"
     BACKEND_PORT: int = 8000
-    CORS_ORIGINS: str = "http://localhost:3000,http://localhost:5173"
+    CORS_ORIGINS: str = "http://localhost:3000,http://localhost:5173,http://localhost:8501,http://127.0.0.1:3000,http://127.0.0.1:5173,http://localhost"
 
     # Admin seed
     ADMIN_EMAIL: str = "admin@autoworth.ai"

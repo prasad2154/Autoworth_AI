@@ -32,14 +32,17 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-autoworth_user}:${POSTGRES_PASSWORD:-autoworth_pass}@postgres:5432/${POSTGRES_DB:-autoworth_db}
     ports:
       - "8000:8000"
+    volumes:
+      - ./models:/app/models
     depends_on:
       postgres:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   # ─── React Frontend ───────────────────────────────────────
   frontend:
@@ -48,8 +51,6 @@ services:
       dockerfile: Dockerfile
     container_name: autoworth_frontend
     restart: unless-stopped
-    environment:
-      VITE_API_URL: http://localhost:8000
     ports:
       - "3000:80"
     depends_on:

@@ -11,7 +11,12 @@ import joblib
 
 # Project-relative model directory
 BASE_DIR = Path(__file__).parent.parent.parent
-MODEL_DIR = BASE_DIR / "models"
+POSSIBLE_MODEL_DIRS = [
+    Path(os.getenv("MODEL_DIR")) if os.getenv("MODEL_DIR") else None,
+    BASE_DIR / "models",
+    BASE_DIR / "backend" / "models",
+    Path("/app/models"),
+]
 
 
 class ModelLoader:
@@ -25,16 +30,19 @@ class ModelLoader:
             cls._instance._loaded = False
         return cls._instance
 
+    def _find_model_dir(self) -> Optional[Path]:
+        for d in POSSIBLE_MODEL_DIRS:
+            if d and d.exists() and (d / "autoworth_model.pkl").exists():
+                return d
+        return None
+
     def load(self) -> None:
         if self._loaded:
             return
 
-        model_path = MODEL_DIR / "autoworth_model.pkl"
-        preprocessor_path = MODEL_DIR / "preprocessor.pkl"
-        metadata_path = MODEL_DIR / "metadata.json"
-
-        if not model_path.exists():
-            print(f"⚠️  Model not found at {model_path}. Run scripts/train_model.py first.")
+        model_dir = self._find_model_dir()
+        if not model_dir:
+            print("⚠️  Model not found in expected paths. Falling back to rule-based estimations.")
             self._loaded = False
             self.model = None
             self.preprocessor = None
@@ -42,6 +50,10 @@ class ModelLoader:
             self.feature_names = []
             self.residuals = []
             return
+
+        model_path = model_dir / "autoworth_model.pkl"
+        preprocessor_path = model_dir / "preprocessor.pkl"
+        metadata_path = model_dir / "metadata.json"
 
         self.model = joblib.load(model_path)
         self.preprocessor = joblib.load(preprocessor_path) if preprocessor_path.exists() else None
